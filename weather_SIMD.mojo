@@ -91,14 +91,7 @@ def start_weather_chat(inout time_list: SIMD, inout val_stuff: Int):
 
             let start_time = time.time()
             let weather_url: String = get_weather_url(weather_dict_bools.get("city").__str__(), weather_dict_bools['fahrenheit'].__bool__()) 
-            let end_time = time.time() 
-            var time_taken = ((end_time-start_time)//.000001).__str__()
 
-            time_taken = time_taken.split('.')[0]
-
-            time_list[val_stuff] = atol(time_taken) #Set the SIMD list at current index to time_taken
-
-            val_stuff = val_stuff +1
 
             
             let weather_dict_data = python_functs.make_dict(get_weather_data(weather_url, weather_dict_bools))
@@ -112,6 +105,15 @@ def start_weather_chat(inout time_list: SIMD, inout val_stuff: Int):
             let usr_info3 = "User: " + string_response_dict + "\nBot:"
             let bot_response3 = python_functs.run_bot(sys_info3, usr_info3, OPENAI_API_KEY).__str__()
             print("Bot: "+ bot_response3) 
+            
+            let end_time = time.time() 
+            var time_taken = ((end_time-start_time)//.000001).__str__()
+
+            time_taken = time_taken.split('.')[0]
+
+            time_list[val_stuff] = atol(time_taken) #Set the SIMD list at current index to time_taken
+
+            val_stuff = val_stuff +1
         else:
             let gpt_prompt = "User: " + user_input + "\nBot:"
             #gpt_response = chat_with_gpt(gpt_prompt)
@@ -125,7 +127,7 @@ def main():
    
     var moving_int  = 0
     start_weather_chat(time_list, moving_int)
-    print("Times taken")
+    print("Time taken per bot response")
 
     time_list = time_list
     for x in range(len(time_list)):
